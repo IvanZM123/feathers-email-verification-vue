@@ -1,8 +1,10 @@
-import _feathers from "@feathersjs/feathers";
+import feathers, { Service } from "@feathersjs/feathers";
 import authentication from "@feathersjs/authentication-client";
 import _rest from "@feathersjs/rest-client";
 // import socketio from "@feathersjs/socketio-client";
 // import io from "socket.io-client";
+
+import { User } from "@/services/auth.service";
 
 // Initialize transport.
 const rest = _rest("http://localhost:3030");
@@ -11,7 +13,7 @@ const rest = _rest("http://localhost:3030");
 // const socket = io("http://localhost:3030");
 
 // Initialize feathers app
-const app = _feathers();
+const app = feathers();
 // Add support real-time with socket.io
 // app.configure(socketio(socket));
 
@@ -26,4 +28,7 @@ app.configure(
   })
 );
 
+// Export authentication-cient
 export const Auth = app.authentication;
+// Export user service.
+export const UserService: Service<User> = app.service("users");

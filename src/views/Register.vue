@@ -17,6 +17,7 @@
                 <input
                   placeholder="Exp: Ivan Zaldivar"
                   class="form-control my-1"
+                  v-model="user.fullname"
                   autocomplete="off"
                   name="fullname"
                   id="fullname"
@@ -30,6 +31,7 @@
                 <input
                   placeholder="Exp: abc@gmail.com"
                   class="form-control my-1"
+                  v-model="user.email"
                   autocomplete="off"
                   name="email"
                   id="email"
@@ -41,6 +43,7 @@
                 <label for="password">Password</label>
                 <input
                   class="form-control my-1"
+                  v-model="user.password"
                   type="password"
                   name="password"
                   id="password"
@@ -50,7 +53,10 @@
               </div>
             </form>
             <div class="pt-2">
-              <button class="btn btn-primary border-0 py-2 px-3 w-100">
+              <button
+                @click="signup"
+                class="btn btn-primary border-0 py-2 px-3 w-100"
+              >
                 Create account
               </button>
             </div>
@@ -63,7 +69,25 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import { AuthService } from "@/services/auth.service";
 
 @Options({})
-export default class RegisterPage extends Vue {}
+export default class RegisterPage extends Vue {
+  user = {
+    fullname: "",
+    email: "",
+    password: "",
+  };
+
+  async signup(): Promise<void> {
+    try {
+      const { fullname, email, password } = this.user;
+      const { signup } = new AuthService();
+      const data = await signup({ fullname, email, password });
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 </script>

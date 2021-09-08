@@ -61,6 +61,8 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 
+import { AuthService } from "@/services/auth.service";
+
 @Options({})
 export default class LoginPage extends Vue {
   credentials: Record<string, string> = {
@@ -69,7 +71,14 @@ export default class LoginPage extends Vue {
   };
 
   async login(): Promise<void> {
-    console.log("Login!");
+    try {
+      const { email, password } = this.credentials;
+      const auth = new AuthService();
+      const data = await auth.login(email, password);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 </script>
