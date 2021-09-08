@@ -6,6 +6,10 @@
     >
       <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
         <div class="card bg-white border-0 shadow p-2">
+          <div class="card-header border-0 bg-white pb-0">
+            <h2><strong>Create account</strong></h2>
+            <p class="text-muted">One account all Feathers</p>
+          </div>
           <div class="card-body">
             <form>
               <div class="form-group py-2">
