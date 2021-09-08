@@ -18,6 +18,7 @@
                   <input
                     placeholder="Exp: abc@gmail.com"
                     class="form-control my-1"
+                    v-model="credentials.email"
                     autocomplete="off"
                     name="email"
                     id="email"
@@ -30,6 +31,7 @@
                   <label for="password">Password</label>
                   <input
                     class="form-control my-1"
+                    v-model="credentials.password"
                     type="password"
                     name="password"
                     id="password"
@@ -41,7 +43,10 @@
                 </div>
               </form>
               <div class="pt-2">
-                <button class="btn btn-primary border-0 py-2 px-3 w-100">
+                <button
+                  @click="login"
+                  class="btn btn-primary border-0 py-2 px-3 w-100"
+                >
                   Login
                 </button>
               </div>
@@ -57,5 +62,14 @@
 import { Options, Vue } from "vue-class-component";
 
 @Options({})
-export default class LoginPage extends Vue {}
+export default class LoginPage extends Vue {
+  credentials: Record<string, string> = {
+    email: "",
+    password: "",
+  };
+
+  async login(): Promise<void> {
+    console.log("Login!");
+  }
+}
 </script>
