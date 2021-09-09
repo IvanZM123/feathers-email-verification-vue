@@ -10,6 +10,13 @@
             <div class="card-header border-0 bg-white pb-0">
               <h2><strong>Login</strong></h2>
               <p class="text-muted">Log in and access our services.</p>
+              <div
+                v-if="message"
+                :class="`alert alert-${message.status} alert-dismissible fade show`"
+                role="alert"
+              >
+                {{ message.text }}
+              </div>
             </div>
             <div class="card-body">
               <form>
@@ -65,6 +72,7 @@ import { AuthService } from "@/services/auth.service";
 
 @Options({})
 export default class LoginPage extends Vue {
+  message: Record<string, string> | null = null;
   credentials: Record<string, string> = {
     email: "",
     password: "",
@@ -74,11 +82,17 @@ export default class LoginPage extends Vue {
     try {
       const { email, password } = this.credentials;
       const auth = new AuthService();
-      const data = await auth.login(email, password);
-      console.log(data);
+      await auth.login(email, password);
+      // Enter profile.
+      this.$router.replace("/profile");
     } catch (error) {
-      console.error(error);
+      this.setMessage(error.message || "", "danger");
     }
+  }
+
+  setMessage(text: string, status: string): void {
+    this.message = { text, status };
+    setTimeout(() => (this.message = null), 5000);
   }
 }
 </script>

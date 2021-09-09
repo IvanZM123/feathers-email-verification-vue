@@ -9,6 +9,13 @@
           <div class="card-header border-0 bg-white pb-0">
             <h2><strong>Create account</strong></h2>
             <p class="text-muted">One account all Feathers</p>
+            <div
+              v-if="message"
+              :class="`alert alert-${message.status} alert-dismissible fade show`"
+              role="alert"
+            >
+              {{ message.text }}
+            </div>
           </div>
           <div class="card-body">
             <form>
@@ -73,6 +80,7 @@ import { AuthService } from "@/services/auth.service";
 
 @Options({})
 export default class RegisterPage extends Vue {
+  message: Record<string, string> | null = null;
   user = {
     fullname: "",
     email: "",
@@ -84,10 +92,18 @@ export default class RegisterPage extends Vue {
       const { fullname, email, password } = this.user;
       const { signup } = new AuthService();
       const data = await signup({ fullname, email, password });
-      console.log(data);
+      this.setMessage(
+        `You have successfully registered, an email has been sent to ${data.email} to confirm that it is you. ✨`,
+        "success"
+      );
     } catch (error) {
-      console.error(error);
+      this.setMessage(error.message || "", "danger");
     }
+  }
+
+  setMessage(text: string, status: string): void {
+    this.message = { text, status };
+    setTimeout(() => (this.message = null), 5000);
   }
 }
 </script>
