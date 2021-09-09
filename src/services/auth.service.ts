@@ -38,10 +38,10 @@ export class AuthService {
   /**
    * Verify the email account.
    */
-  async verifySignUp(token: string): Promise<unknown> {
-    return await AuthManagement.create({
+  async verifySignUp(token: string): Promise<User> {
+    return (await AuthManagement.create({
       action: "verifySignupLong",
       value: token,
-    });
+    })) as Promise<User>;
   }
 }

@@ -39,7 +39,7 @@
   </div>
 
   <main>
-    <div class="container-fluid py-2">
+    <div class="">
       <router-view />
     </div>
   </main>

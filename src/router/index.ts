@@ -16,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "Login",
     component: () => import("@/views/Login.vue"),
   },
+  {
+    path: "/verifyEmail",
+    name: "Verify-Email",
+    component: () => import("@/views/VerifyEmail.vue"),
+  },
 ];
 
 const router = createRouter({
