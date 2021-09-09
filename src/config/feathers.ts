@@ -30,5 +30,7 @@ app.configure(
 
 // Export authentication-cient
 export const Auth = app.authentication;
+// Export auth management.
+export const AuthManagement: Service<any> = app.service("authManagement");
 // Export user service.
 export const UserService: Service<User> = app.service("users");

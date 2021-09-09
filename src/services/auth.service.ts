@@ -1,5 +1,5 @@
 import { AuthenticationClient } from "@feathersjs/authentication-client/lib";
-import { Auth, UserService } from "@/config/feathers";
+import { Auth, AuthManagement, UserService } from "@/config/feathers";
 
 export interface User {
   _id: string;
@@ -33,5 +33,15 @@ export class AuthService {
 
   async signup(user: Omit<User, "_id">): Promise<User> {
     return await UserService.create(user);
+  }
+
+  /**
+   * Verify the email account.
+   */
+  async verifySignUp(token: string): Promise<unknown> {
+    return await AuthManagement.create({
+      action: "verifySignupLong",
+      value: token,
+    });
   }
 }
