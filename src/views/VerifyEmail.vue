@@ -57,15 +57,18 @@ export default class VerifyEmail extends Vue {
     status: STATUS.PENDING,
   };
 
-  async created(): Promise<void> {
-    const { query } = this.$route;
-    this.verifyAccount(query);
+  created(): void {
+    // We carry out the verification.
+    this.verifyAccount(this.$route.query);
   }
 
   private async verifyAccount(query: LocationQuery): Promise<void> {
     try {
+      // Instance class.
       const { verifySignUp } = new AuthService();
+      // Send request to the server.
       const user = await verifySignUp((query.token as string) || "");
+      // Show sucess message.
       this.notification = {
         picture: "picture-three.png",
         title: "Verified account",
@@ -74,10 +77,11 @@ export default class VerifyEmail extends Vue {
         status: STATUS.ERROR,
       };
     } catch (error) {
+      // Show failure message.
       this.notification = {
         picture: "picture-two.png",
         title: "Error",
-        subtitle: error.message || "Your account has been verified.",
+        subtitle: error.message || "An error occurred during the operation.",
         color: "danger",
         status: STATUS.ERROR,
       };
